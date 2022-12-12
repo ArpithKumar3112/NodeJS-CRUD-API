@@ -3,10 +3,10 @@ var express = require("express");
 var bodyparser = require("body-parser");
 var app = express(); //root object as per documentation
 var mongoose = require("mongoose");
+
 const { query } = require("express");
 const { runInNewContext } = require("vm");
 
-app.use(bodyparser.json());
 // let getUserModel = mongoose.model("GET", userSchema);
 // let postUserModel = mongoose.model("POST", userSchema);
 

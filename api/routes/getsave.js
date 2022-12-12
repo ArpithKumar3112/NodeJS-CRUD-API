@@ -6,12 +6,16 @@ var bodyparser = require("body-parser");
 router.use(bodyparser.json());
 
 router.get("/", async (req, res) => {
-  console.log(req.query);
-  const getSave_res = await getSave_api.getSave(req.query);
-  res.status(201).json({
-    message: "Data Saved succesfully",
-    getSave_res,
-  });
+  try {
+    console.log(req.query);
+    const getSave_res = await getSave_api.getSave(req.query);
+    res.status(201).json({
+      message: "Data Saved succesfully",
+      output: getSave_res,
+    });
+  } catch (err) {
+    res(400).send(err);
+  }
 });
 
 module.exports = router;

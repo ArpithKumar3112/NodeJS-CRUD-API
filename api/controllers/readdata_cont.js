@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const userSchema = require("../../models/model");
-const postUserModel = mongoose.model("POST", userSchema);
+const postUserModel = mongoose.model("GET", userSchema);
 
 module.exports = {
   readData: async (query) => {

@@ -6,12 +6,16 @@ var bodyparser = require("body-parser");
 router.use(bodyparser.json());
 
 router.get("/", async (req, res) => {
-  console.log(req.query);
-  const readData_res = await readData_api.readData(req.query);
-  res.status(201).json({
-    message: "Data Output",
-    readData_res,
-  });
+  try {
+    console.log(req.query);
+    const readData_res = await readData_api.readData(req.query);
+    res.status(201).json({
+      count: readData_res.length,
+      data: readData_res,
+    });
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
 module.exports = router;

@@ -1,154 +1,271 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
-        "version": "1.0.0",
-        "title": "NodeJS API"
+      "version": "1.0.0",
+      "title": "NodeJS API",
+      "description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation"
     },
-    "schemes": ["http"],
     "host": "localhost:3000",
-    "paths" : {
-        "/readdata" : {
-            "get" : {
-                "summary" : "Get all the Data",
-                "produces": ["application/json"],
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todosResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid status value",
-                        "schema": {
-                            "$ref": "#/definitions/InvalidResponse"
-                        }
-                    }
-                }
+    "basePath": "/",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+      "/deletedata": {
+        "put": {
+          "tags": ["CRUD"],
+          "summary": "Delete data as per the parameters passed in the query",
+          "parameters": [
+            {
+              "name": "username",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "in": "query",
+              "type": "string",
+              "format": "email"
             }
-        },
-        "/postsave" : {
-            "post" : {
-                "summary" : "Save the data",
-                "produces": ["application/json"],
-                "consumes": ["application/json"],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Save the data",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "task" : {
-                                    "type": "object",
-                                    "$ref": "#/definitions/Task"
-                                } 
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todosResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid status value",
-                        "schema": {
-                            "$ref": "#/definitions/InvalidResponse"
-                        }
-                    }
-                }
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete Succesfull",
+              "schema": {
+                "$ref": "#/definitions/DelSuccessModel"
+              }
+            },
+            "400": {
+              "description": "Delete Failed",
+              "schema": {
+                "$ref": "#/definitions/FailedModel"
+              }
             }
-        },
-        "/deletedata?_id={id}" : {
-            "put" : {
-                "summary" : "Delete the Data",
-                "produces": ["application/json"],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Data id that needs to be deleted",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todosResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid status value",
-                        "schema": {
-                            "$ref": "#/definitions/InvalidResponse"
-                        }
-                    }
-                }
-            }
+          }
         }
-    }, 
+      },
+      "/postsave": {
+        "post": {
+          "tags": ["CRUD"],
+          "summary": "Post data and save it in the Database",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Save the data",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UpdatePostBody"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Save Succesfull",
+              "schema": {
+                "$ref": "#/definitions/SuccessModel"
+              }
+            },
+            "400": {
+              "description": "Save Failed",
+              "schema": {
+                "$ref": "#/definitions/FailedModel"
+              }
+            }
+          }
+        }
+      },
+      "/readdata": {
+        "get": {
+          "tags": ["CRUD"],
+          "summary": "Read data based on parameters",
+          "parameters": [
+            {
+              "name": "username",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "in": "query",
+              "type": "string",
+              "format": "email"
+            },
+            {
+              "name": "password",
+              "in": "query",
+              "type": "string",
+              "format": "password"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "DataOutput",
+              "schema": {
+                "$ref": "#/definitions/ReadSuccessModel"
+              }
+            },
+            "400": {
+              "description": "Save Failed",
+              "schema": {
+                "$ref": "#/definitions/FailedModel"
+              }
+            }
+          }
+        }
+      },
+      "/updatedata": {
+        "put": {
+          "tags": ["CRUD"],
+          "summary": "Post data and save it in the Database",
+          "parameters": [
+            {
+              "name": "username",
+              "in": "query",
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "in": "query",
+              "type": "string",
+              "format": "email"
+            },
+            {
+              "name": "password",
+              "in": "query",
+              "type": "string",
+              "format": "password"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Save the data",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UpdatePostBody"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Update Succesfull",
+              "schema": {
+                "$ref": "#/definitions/UpdateSuccessModel"
+              }
+            },
+            "400": {
+              "description": "Update Failed",
+              "schema": {
+                "$ref": "#/definitions/FailedModel"
+              }
+            }
+          }
+        }
+      }
+    },
     "definitions": {
-        "todosResponse": {
-            "type": "object",
-            "properties": {
-                "id": {
-                     "type": "integer"
-                },
-                "username": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "Task": {
-            "type": "object",
-            "properties": {
-                "username": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "InvalidResponse": {
-            "type": "object",
-            "properties": {
-                "statusCode": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-
+      "DelSuccessModel": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "acknowledged": {
+            "type": "boolean"
+          },
+          "deleteCount": {
+            "type": "integer"
+          }
         }
+      },
+      "FailedModel": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object"
+          }
+        }
+      },
+      "SuccessModel": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "ReadSuccessModel": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "parameters": {
+                "_id": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "password": {
+                  "type": "string",
+                  "format": "password"
+                },
+                "__v": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdatePostBody": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "UpdateSuccessModel": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "acknowledged": {
+            "type": "boolean"
+          },
+          "modifiedCount": {
+            "type": "integer"
+          },
+          "upsertedId": {
+            "type": "string"
+          },
+          "upsertedCount": {
+            "type": "integer"
+          },
+          "matchedCount": {
+            "type": "integer"
+          }
+        }
+      }
     }
-}
+  }

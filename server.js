@@ -20,6 +20,7 @@ const getSaveRoutes = require("./api/routes/getsave");
 const postSaveRoutes = require("./api/routes/postsave");
 const updateRoutes = require("./api/routes/updatedata");
 const readDataRoutes = require("./api/routes/readdata");
+const readApiDocs = require("./api/routes/apidocs");
 
 //Mongo DB Connection
 mongoose.connect("mongodb://localhost:27017/random", {}, (error, success) => {
@@ -35,8 +36,9 @@ app.use("/getsave", getSaveRoutes);
 app.use("/postsave", postSaveRoutes);
 app.use("/updatedata", updateRoutes);
 app.use("/readdata", readDataRoutes);
+app.use("/api-docs", readApiDocs);
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
+app.use('/apiDocs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 
 app.listen(3000, (err) => {
   if (err) {

@@ -3,6 +3,10 @@ var express = require("express");
 var bodyparser = require("body-parser");
 var app = express(); //root object as per documentation
 var mongoose = require("mongoose");
+var fs = require('fs');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./api/utils/swagger.json');
+const customCss = fs.readFileSync((process.cwd()+"/api/utils/swagger.css"), 'utf8');
 
 const { query } = require("express");
 const { runInNewContext } = require("vm");
@@ -31,6 +35,8 @@ app.use("/getsave", getSaveRoutes);
 app.use("/postsave", postSaveRoutes);
 app.use("/updatedata", updateRoutes);
 app.use("/readdata", readDataRoutes);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 
 app.listen(3000, (err) => {
   if (err) {

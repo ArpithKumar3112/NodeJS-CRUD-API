@@ -4,6 +4,7 @@
   "description": "Perform basic CRUD operations in Mongo DB",
   "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "arpithkumar",
@@ -14,6 +15,7 @@
     "express": "^4.18.2",
     "install": "^0.13.0",
     "mongoose": "^6.7.5",
+    "nodemon": "^2.0.20",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.6.0"
   }

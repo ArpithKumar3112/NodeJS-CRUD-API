@@ -7,13 +7,15 @@ router.put("/", async (req, res) => {
     console.log(req.query);
     const deleteres = await deleteData_api.deleteData(req.query);
     if (deleteres)
-      res.status(201).json({
+      res.status(200).json({
         message: "Data Deleted succesfully",
-        output: deleteres,
+        acknowledged: deleteres.acknowledged,
+        deleteCount: deleteres.deletedCount,
       });
   } catch (err) {
     res.status(400).json({
-      err,
+      message: "Delete failed",
+      error: err,
     });
   }
 });

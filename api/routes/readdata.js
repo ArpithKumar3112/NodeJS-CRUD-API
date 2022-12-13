@@ -9,12 +9,15 @@ router.get("/", async (req, res) => {
   try {
     console.log(req.query);
     const readData_res = await readData_api.readData(req.query);
-    res.status(201).json({
+    res.status(200).json({
       count: readData_res.length,
       data: readData_res,
     });
   } catch (err) {
-    res.status(400).send(err);
+    res.status(400).json({
+      message: "Save failed",
+      error: err,
+    });
   }
 });
 

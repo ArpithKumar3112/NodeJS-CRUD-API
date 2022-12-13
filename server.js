@@ -3,12 +3,11 @@ var express = require("express");
 var bodyparser = require("body-parser");
 var app = express(); //root object as per documentation
 var mongoose = require("mongoose");
+var swaggerDocument = require("./swagger.json");
+var swaggerUi = require("swagger-ui-express");
 
 const { query } = require("express");
 const { runInNewContext } = require("vm");
-
-// let getUserModel = mongoose.model("GET", userSchema);
-// let postUserModel = mongoose.model("POST", userSchema);
 
 //Routes
 const deleteRoutes = require("./api/routes/deletedata");
@@ -31,6 +30,9 @@ app.use("/getsave", getSaveRoutes);
 app.use("/postsave", postSaveRoutes);
 app.use("/updatedata", updateRoutes);
 app.use("/readdata", readDataRoutes);
+
+//Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(3000, (err) => {
   if (err) {

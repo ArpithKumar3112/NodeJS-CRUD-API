@@ -9,12 +9,15 @@ router.get("/", async (req, res) => {
   try {
     console.log(req.query);
     const getSave_res = await getSave_api.getSave(req.query);
-    res.status(201).json({
+    res.status(200).json({
       message: "Data Saved succesfully",
       output: getSave_res,
     });
   } catch (err) {
-    res(400).send(err);
+    res(400).json({
+      message: "Save failed",
+      error: err,
+    });
   }
 });
 

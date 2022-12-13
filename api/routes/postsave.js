@@ -9,12 +9,15 @@ router.post("/", async (req, res) => {
   try {
     console.log(req.body);
     const postSave_res = await postSave_api.postSave(req.body);
-    res.status(201).json({
+    res.status(200).json({
       message: "Data Saved succesfully",
-      output: postSave_res,
+      id: postSave_res._id,
     });
   } catch (err) {
-    res(400).send(err);
+    res(400).json({
+      message: "Save failed",
+      error: err,
+    });
   }
 });
 

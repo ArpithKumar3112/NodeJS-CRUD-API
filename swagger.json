@@ -1,0 +1,282 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "My User Project CRUD",
+    "description": "My User Project Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "CRUD",
+      "description": "Basic CRUD Operations in Mongo DB"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+
+  "paths": {
+    "/deletedata": {
+      "put": {
+        "tags": ["CRUD"],
+        "summary": "Delete data as per the parameters passed in the query",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string",
+            "format": "email"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete Succesfull",
+            "schema": {
+              "$ref": "#/definitions/DelSuccessModel"
+            }
+          },
+          "400": {
+            "description": "Delete Failed",
+            "schema": {
+              "$ref": "#/definitions/FailedModel"
+            }
+          }
+        }
+      }
+    },
+    "/postsave": {
+      "post": {
+        "tags": ["CRUD"],
+        "summary": "Post data and save it in the Database",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Save the data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdatePostBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Save Succesfull",
+            "schema": {
+              "$ref": "#/definitions/SuccessModel"
+            }
+          },
+          "400": {
+            "description": "Save Failed",
+            "schema": {
+              "$ref": "#/definitions/FailedModel"
+            }
+          }
+        }
+      }
+    },
+    "/readdata": {
+      "get": {
+        "tags": ["CRUD"],
+        "summary": "Read data based on parameters",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string",
+            "format": "email"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string",
+            "format": "password"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DataOutput",
+            "schema": {
+              "$ref": "#/definitions/ReadSuccessModel"
+            }
+          },
+          "400": {
+            "description": "Save Failed",
+            "schema": {
+              "$ref": "#/definitions/FailedModel"
+            }
+          }
+        }
+      }
+    },
+    "/updatedata": {
+      "put": {
+        "tags": ["CRUD"],
+        "summary": "Post data and save it in the Database",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string",
+            "format": "email"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string",
+            "format": "password"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Save the data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdatePostBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update Succesfull",
+            "schema": {
+              "$ref": "#/definitions/UpdateSuccessModel"
+            }
+          },
+          "400": {
+            "description": "Update Failed",
+            "schema": {
+              "$ref": "#/definitions/FailedModel"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DelSuccessModel": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "acknowledged": {
+          "type": "boolean"
+        },
+        "deleteCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "FailedModel": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "error": {
+          "type": "object"
+        }
+      }
+    },
+    "SuccessModel": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "ReadSuccessModel": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "parameters": {
+              "_id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "password": {
+                "type": "string",
+                "format": "password"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "UpdatePostBody": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
+        }
+      }
+    },
+    "UpdateSuccessModel": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "acknowledged": {
+          "type": "boolean"
+        },
+        "modifiedCount": {
+          "type": "integer"
+        },
+        "upsertedId": {
+          "type": "string"
+        },
+        "upsertedCount": {
+          "type": "integer"
+        },
+        "matchedCount": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

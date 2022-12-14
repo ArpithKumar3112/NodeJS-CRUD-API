@@ -8,6 +8,7 @@ var swaggerUi = require("swagger-ui-express");
 
 const { query } = require("express");
 const { runInNewContext } = require("vm");
+const readApiDocs = require("./api/routes/apidocs");
 
 //Routes
 const deleteRoutes = require("./api/routes/deletedata");
@@ -30,9 +31,10 @@ app.use("/getsave", getSaveRoutes);
 app.use("/postsave", postSaveRoutes);
 app.use("/updatedata", updateRoutes);
 app.use("/readdata", readDataRoutes);
+app.use("/api-docs", readApiDocs);
 
 //Swagger
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/apiDocs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(3000, (err) => {
   if (err) {
